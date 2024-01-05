@@ -78,6 +78,8 @@ class TalkerDataCard extends StatelessWidget {
                               color: color,
                               fontSize: 12,
                             ),
+                            maxLines: 6,
+                            overflow: TextOverflow.ellipsis,
                           ),
                         if (expanded && errorMessage != null)
                           Text(
@@ -86,6 +88,8 @@ class TalkerDataCard extends StatelessWidget {
                               color: color,
                               fontSize: 12,
                             ),
+                            maxLines: 6,
+                            overflow: TextOverflow.ellipsis,
                           ),
                       ],
                     ),
@@ -97,6 +101,8 @@ class TalkerDataCard extends StatelessWidget {
                       color: color,
                       fontSize: 12,
                     ),
+                    maxLines: 6,
+                    overflow: TextOverflow.ellipsis,
                   ),
                 if (expanded && stackTrace != null)
                   Container(
@@ -112,6 +118,8 @@ class TalkerDataCard extends StatelessWidget {
                         color: color,
                         fontSize: 12,
                       ),
+                      maxLines: 6,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
               ],
