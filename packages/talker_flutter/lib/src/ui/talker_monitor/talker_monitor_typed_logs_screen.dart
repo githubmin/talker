@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:talker_flutter/src/ui/talker_details/talker_details.dart';
 import 'package:talker_flutter/talker_flutter.dart';
 
-class TalkerMonitorTypedLogsScreen extends StatelessWidget {
+class TalkerMonitorTypedLogsScreen extends StatefulWidget {
   const TalkerMonitorTypedLogsScreen({
     Key? key,
     required this.exceptions,
@@ -15,11 +16,18 @@ class TalkerMonitorTypedLogsScreen extends StatelessWidget {
   final List<TalkerDataInterface> exceptions;
 
   @override
+  State<TalkerMonitorTypedLogsScreen> createState() =>
+      _TalkerMonitorTypedLogsScreenState();
+}
+
+class _TalkerMonitorTypedLogsScreenState
+    extends State<TalkerMonitorTypedLogsScreen> {
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: theme.backgroundColor,
+      backgroundColor: widget.theme.backgroundColor,
       appBar: AppBar(
-        title: Text('Talker Monitor $typeName'),
+        title: Text('Talker Monitor ${widget.typeName}'),
       ),
       body: CustomScrollView(
         slivers: [
@@ -27,13 +35,18 @@ class TalkerMonitorTypedLogsScreen extends StatelessWidget {
           SliverList(
             delegate: SliverChildBuilderDelegate(
               (context, index) {
-                final data = exceptions[index];
+                final data = widget.exceptions[index];
                 return TalkerDataCard(
                   data: data,
-                  onTap: () => _copyTalkerDataItemText(context, data),
+                  onTap: () => Navigator.of(context).push(
+                    TalkerDetails.route(
+                      data,
+                      onCopy: _copyTalkerDataItemText,
+                    ),
+                  ),
                 );
               },
-              childCount: exceptions.length,
+              childCount: widget.exceptions.length,
             ),
           ),
         ],
@@ -41,13 +54,13 @@ class TalkerMonitorTypedLogsScreen extends StatelessWidget {
     );
   }
 
-  void _copyTalkerDataItemText(BuildContext context, TalkerDataInterface data) {
+  void _copyTalkerDataItemText(TalkerDataInterface data) {
     final text = data.generateTextMessage();
     Clipboard.setData(ClipboardData(text: text));
-    _showSnackBar(context, 'Log item is copied in clipboard');
+    _showSnackBar('Log item is copied in clipboard');
   }
 
-  void _showSnackBar(BuildContext context, String text) {
+  void _showSnackBar(String text) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text(text)),
     );

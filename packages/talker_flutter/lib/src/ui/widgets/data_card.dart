@@ -51,7 +51,6 @@ class TalkerDataCard extends StatelessWidget {
                         ),
                       ),
                     ),
-                    if (onTap != null) Icon(Icons.copy, color: color, size: 18),
                   ],
                 ),
                 if (expanded)

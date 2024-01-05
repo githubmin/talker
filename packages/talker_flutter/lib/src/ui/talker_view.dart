@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:group_button/group_button.dart';
 import 'package:talker_flutter/src/controller/controller.dart';
+import 'package:talker_flutter/src/ui/talker_details/talker_details.dart';
 import 'package:talker_flutter/src/ui/talker_monitor/talker_monitor.dart';
 import 'package:talker_flutter/src/ui/talker_settings/talker_settings.dart';
 import 'package:talker_flutter/src/ui/widgets/talker_view_appbar.dart';
@@ -92,7 +93,12 @@ class _TalkerViewState extends State<TalkerView> {
                       return TalkerDataCard(
                         data: data,
                         backgroundColor: widget.theme.cardColor,
-                        onTap: () => _copyTalkerDataItemText(data),
+                        onTap: () => Navigator.of(context).push(
+                          TalkerDetails.route(
+                            data,
+                            onCopy: _copyTalkerDataItemText,
+                          ),
+                        ),
                         expanded: _controller.expandedLogs,
                       );
                     },
