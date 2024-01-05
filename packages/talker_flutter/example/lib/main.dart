@@ -47,6 +47,13 @@ class _BaseExampleState extends State<BaseExample> {
     talker.info('2.......');
     talker.info('1');
     talker.good('Now you can check all Talkler power ⚡');
+
+    FlutterError.onError = (details) => talker.handle(
+          details.exception,
+          details.stack,
+          'Uncaught Flutter exception',
+        );
+
     super.initState();
   }
 
@@ -61,7 +68,27 @@ class _BaseExampleState extends State<BaseExample> {
       ),
       home: Builder(builder: (context) {
         return Scaffold(
-          body: TalkerScreen(talker: widget.talker),
+          appBar: AppBar(title: const Text('Talker Flutter')),
+          body: Container(
+            padding: const EdgeInsets.all(32),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Row(children: [Text('Track this Flutter problem. ' * 10)]),
+                const SizedBox(height: 16),
+                ElevatedButton.icon(
+                  onPressed: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => TalkerScreen(talker: widget.talker),
+                    ),
+                  ),
+                  icon: const Icon(Icons.open_in_new),
+                  label: const Text('Log Console'),
+                ),
+              ],
+            ),
+          ),
         );
       }),
     );
